@@ -19,6 +19,10 @@ export default function Header() {
           color: "gray",
           cursor: "pointer",
         }}
+        onClick={() => {
+          alert("홈으로 이동");
+          navigate("/");
+        }}
       >
         <FaHome />
       </h1>

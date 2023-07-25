@@ -1,9 +1,35 @@
-import React from "react";
-
+import React, { useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useNavigate } from "react-router-dom";
 
-export default function Create() {
+export default function Create({ items, setItems }) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  //제목이 변경될 경우
+  const onTitlechangeHandler = (event) => {
+    setTitle(event.target.value);
+  };
+  //내용이 변경될  경우
+  const onContenttlechangeHandler = (event) => {
+    setContent(event.target.value);
+  };
+  const navigate = useNavigate();
+  //리스트추가
+  const onAddButtonHandler = () => {
+    setItems([
+      ...items,
+      {
+        id: items.length + 1,
+        title: title,
+        content: content,
+        author: "작성자",
+      },
+    ]);
+    navigate("/");
+  };
+
   return (
     <>
       <Header />
@@ -23,6 +49,9 @@ export default function Create() {
           <div>
             <input
               placeholder="제목"
+              type="text"
+              value={title}
+              onChange={onTitlechangeHandler}
               style={{
                 width: "100%",
                 height: "60px",
@@ -41,6 +70,9 @@ export default function Create() {
           >
             <textarea
               placeholder="내용"
+              type="text"
+              value={content}
+              onChange={onContenttlechangeHandler}
               style={{
                 resize: "none",
                 height: "100%",
@@ -63,6 +95,7 @@ export default function Create() {
               backgroundColor: "skyblue",
               cursor: "pointer",
             }}
+            onClick={onAddButtonHandler}
           >
             추가하기
           </button>

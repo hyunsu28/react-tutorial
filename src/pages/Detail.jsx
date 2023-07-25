@@ -2,8 +2,12 @@ import React from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function Detail() {
+export default function Detail({ items }) {
+  const { id } = useParams();
+  console.log(id);
+
   const navigate = useNavigate();
   return (
     <>
@@ -16,7 +20,7 @@ export default function Detail() {
             padding: "12px",
           }}
         >
-          제목
+          {items[id].title}
         </h1>
         <div
           style={{
@@ -26,10 +30,7 @@ export default function Detail() {
             padding: "12px",
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad doloribus
-          blanditiis vitae sapiente. Expedita delectus nihil animi pariatur,
-          labore quod officiis dolor fugit. Mollitia quod, delectus velit
-          deleniti nihil veniam!
+          {items[id].content}
         </div>
         <div
           style={{
