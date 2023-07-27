@@ -2,9 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../index";
 
-export default function Main({ items }) {
+export default function Main() {
+  const 아이템들 = useSelector((state) => state.아이템);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    if (window.confirm("삭제할까?")) {
+      dispatch(deletePost(id));
+    }
+  };
+
   return (
     <>
       <Header />
@@ -32,8 +43,8 @@ export default function Main({ items }) {
             추가
           </button>
         </div>
-        {/* APP.js에서 items이라고 한 것을 map으로 돌리고 이것을 이제 A라고 칭하겠다. */}
-        {items.map((A) => (
+
+        {아이템들.map((A) => (
           <div
             key={A.id}
             style={{
@@ -96,10 +107,9 @@ export default function Main({ items }) {
                 >
                   수정
                 </button>
+
                 <button
-                  onClick={() => {
-                    alert("삭제할까?");
-                  }}
+                  onClick={() => handleDelete(A.id)}
                   style={{
                     border: "none",
                     padding: "8px",

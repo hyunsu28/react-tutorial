@@ -2,13 +2,20 @@ import React from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { deletePost } from "../index";
 
-export default function Detail({ items }) {
-  const { id } = useParams();
-  console.log(id);
-
+export default function Detail() {
+  const 아이템들 = useSelector((state) => state.아이템);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    if (window.confirm("삭제할까?")) {
+      dispatch(deletePost(id));
+    }
+  };
+
   return (
     <>
       <Header />
@@ -20,7 +27,7 @@ export default function Detail({ items }) {
             padding: "12px",
           }}
         >
-          {items[id].title}
+          {아이템들.title}
         </h1>
         <div
           style={{
@@ -30,7 +37,7 @@ export default function Detail({ items }) {
             padding: "12px",
           }}
         >
-          {items[id].content}
+          {아이템들.content}
         </div>
         <div
           style={{
@@ -41,7 +48,7 @@ export default function Detail({ items }) {
         >
           <button
             onClick={() => {
-              navigate("/edit");
+              navigate(`/edit/${아이템들.id}`);
             }}
             style={{
               border: "none",
@@ -57,7 +64,8 @@ export default function Detail({ items }) {
           </button>
           <button
             onClick={() => {
-              alert("삭제할까?");
+              handleDelete(아이템들.id);
+              navigate("/");
             }}
             style={{
               border: "none",
